@@ -18,12 +18,13 @@ Lưu ý: đừng quên dấu * phía trước ngIf
 
 <h3> 4.2 Tìm hiểu về ngFor </h3>
 Sử dụng khi muốn render một list các phần tử. 
-NgFor cung cấp các biến cục bộ, có thể tạo một alias cho các biến đó như:
-index xác định chỉ số hiện tại của vòng lặp tương ứng.
-first xác định vòng lặp hiện tại có phải là vòng lặp đầu tiên không -> true : false.
-last xác định vòng lặp hiện tại có phải là vòng lặp cuối cùng không -> true : false.
-even xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số chẵn không -> true : false.
-odd xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số lẻ không -> true : false.
++ NgFor cung cấp các biến cục bộ, có thể tạo một alias cho các biến đó như:
+ - index xác định chỉ số hiện tại của vòng lặp tương ứng.
+ - first xác định vòng lặp hiện tại có phải là vòng lặp đầu tiên không -> true : false.
+ - last xác định vòng lặp hiện tại có phải là vòng lặp cuối cùng không -> true : false.
+ - even xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số chẵn không -> true : false.
+ - odd xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số lẻ không -> true : false.
+
 Ví dụ: render list các students trong một class chẳng hạn.
 Như ví dụ trên thì ta cũng tạo ra một component tên demo_ngFor. Trong đó sẽ có file:
     <img src="https://i.imgur.com/ZDBT42N.png">
