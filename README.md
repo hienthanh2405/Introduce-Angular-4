@@ -113,3 +113,119 @@
   Và khi run lên thì nó sẽ hiển thị trên trình duyệt là Demo Component
 - Note: Ngoài ra, ta còn cách tạo nhanh 1 component bằng CLI: "ng g c tencomponent", nó sẽ tự động làm 4 bước trên giúp ta, ta chỉ cần vô các file đã được tạo ra và chỉnh sửa là ok.   
 
+## 2.3. Pipe trong Angular
+  Bạn có dữ liệu nhận được từ đâu đó(ví dụ như từ API trả về) cho kiểu Date là dãy số kiểu long, bây giờ bạn phải hiển thị dữ liệu đó thành dạng mà người dùng có thể hiểu được trong ứng dụng viết bằng Angular. Làm thế nào để thực hiện điều đó trong Angular? Sau đây mình sẽ giới thiệu cho các bạn về Pipe trong Angular – một thành phần cơ bản của Angular.
+### Pipe là gì?
+- Pipe được dùng để chuyển đổi dữ liệu mà bạn hiển thị lên template cho người dùng có thể hiểu được.
+- Ví dụ: định dạng ngày tháng cho kiểu Date, viết hoa các chữ cái đầu tiên của tên riêng như tên người, tên thành phố, etc...
+- Angular cung cấp cho chúng ta các Pipes sau đây (những Pipes là Stable): AsyncPipe, CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, LowerCasePipe, PercentPipe, SlicePipe, TitleCasePipe, UpperCasePipe.
+ ![pipe](https://user-images.githubusercontent.com/35052781/35133888-64d435be-fd05-11e7-9cd9-47359a4c8ed9.png)
+  Trong đó có TitleCasePipe là pipe có từ phiên bản Angular 4.
+
+### Pipe sử dụng như thế nào?
+- Nếu bạn sử dụng Date và Currency pipes thì bạn cần phải có thêm polyfill để support trên các trình duyệt cũ, bằng việc thêm đoạn script sau vào file index.html
+```<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>```
+- Hoặc nếu bạn sử dụng Angular CLI thì chạy lệnh cài đặt npm install --save intl và uncomment dòng sau trong file polyfill.ts
+```import 'core-js/es6/reflect';
+   import 'core-js/es7/reflect';
+   import 'zone.js/dist/zone';
+```
+- Chúng ta có thể sử dụng một pipe duy nhất, có thể bao gồm cả tham số, hoặc có thể sử dụng pipe theo tuần tự – với kết quả của pipe này là đầu vào của pipe tiếp theo.
+- Ví dụ:
+  + Sử dụng Pipe lowercase và uppercase: (sử dụng không có tham số)
+```@Component({
+     selector: 'lowerupper-pipe',
+     template: `<div>
+       <label>Name: </label><input #name (keyup)="change(name.value)" type="text">
+       <p>In lowercase: {{value | lowercase}}</p>
+       <p>In uppercase: {{value | uppercase}}</p>
+     </div>`
+   })
+   export class LowerUpperPipeComponent {
+     value: string;
+     change(value: string) { 
+       this.value = value; 
+     }
+   }
+```
+  + Sử dụng có tham số như Pipe date:
+```@Component({
+     selector: 'date-pipe',
+     template: `<div>
+       <p>Today is {{today | date}}</p>
+       <p>Or if you prefer, {{today | date:'fullDate'}}</p>
+       <p>The time is {{today | date:'jmZ'}}</p>
+     </div>`
+   })
+   export class DatePipeComponent {
+     today: number = Date.now();
+   } 
+```
+  + Sử dụng nhiều tham số như Pipe slice:
+```@Component({
+     selector: 'slice-list-pipe',
+     template: `<ul>
+       <li *ngFor="let i of collection | slice:1:3">{{ i }}</li>
+     </ul>`
+   })
+   export class SlicePipeListComponent {
+     collection: string[] = ['a', 'b', 'c', 'd'];
+   } 
+```
+  +Sử dụng nhiều Pipe tuần tự – Chaining Pipe:
+```@Component({
+     selector: 'date-pipe',
+     template: `<div>
+       <p>Today is {{today | date | lowercase}}</p>
+       <p>Or if you prefer, {{today | date:'fullDate' | lowercase}}</p>
+       <p>The time is {{today | date:'jmZ' | uppercase}}</p>
+     </div>`
+   })
+   export class DatePipeComponent {
+     today: number = Date.now();
+   }
+``` 
+- Trong Angular chia làm hai loại Pipe là pure pipe và impure pipe:
+  + Pure pipe: chỉ thực hiện thay đổi khi đầu vào thay đổi. (các immutable objects, primitive type: string, number, boolean, etc): lowercase, uppercase, date, etc...
+  + Impure pipe: thực hiện thay đổi mỗi chu kỳ của Change detection (chu kỳ kiểm tra xem các state trong ứng dụng có thay đổi không để update lên view): async, json, etc...
+
+### Cách tạo một Custom Pipe trong Angular như thế nào?
+- Đầu tiên, chúng ta tạo một class và decorate nó với decorator @Pipe, decorator này cần tối thiểu một object có property name, chính là tên của pipe.
+- Ví dụ, chúng ta có thể tạo một pipe để convert nhiệt độ giữa độ C và độ F với tên tempConverter như sau:
+```import { Pipe } from '@angular/core';
+
+  @Pipe({
+     name: 'tempConverter'
+   })
+   export class TempConverterPipe {
+   }
+```
+ + Mặc định khi tạo là pure pipe.
+ + Tiếp theo, chúng ta cần implement một interface là PipeTransform, và implement hàm transform của interface đó:
+```import { Pipe, PipeTransform } from '@angular/core';
+
+   @Pipe({
+    name: 'tempConverter'
+   })
+   export class TempConverterPipe implements PipeTransform {
+     transform(value: any, ...args: any[]): any {
+     }
+   }
+``` 
+  + Trong hàm transform, chúng ta sẽ thực hiện các công việc để biến đổi đầu vào ra kết quả mong muốn ở đầu ra.
+  + Sau khi hoàn thành implement class Pipe ở trên, chúng ta cần khai báo vào NgModule mà nó thuộc về để có thể sử dụng nó trong toàn module đó:
+```import { TempConverterPipe } from './pipes/temp-converter.pipe';
+
+   @NgModule({
+     declarations: [
+      // các Component, Directive, Pipe khác
+       TempConverterPipe
+     ],
+     imports: [...],
+     providers: [...],
+     //...
+   })
+   export class AppModule { }
+```
+  + Sử dụng pipe ở trong Component như sau:
+```Temperature {{ temp | tempConverter:true:'F' }}```
