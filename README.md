@@ -1,88 +1,40 @@
-﻿<h2> 4. Các directive cơ bản trong Angular: ngFor, ngIf, ngModel </h2>
+# 2. Tìm hiểu về Module, Component, Injectable, Pipe, Directive.
 
-Angular directive được sử dụng để kế thừa HTML. Có những thuộc tính đặc biệt bắt đầu với tiền tố ng-. Chúng ta sẽ thảo luận những directive:
-<br>
-<h3> 4.1 Tìm hiểu về ngIf </h3>
-Chúng ta dùng chỉ thị *ngIf để thực hiện biểu thức điều kiện.Theo sau *ngIf là một câu lệnh so sánh hay bất cứ một biểu thức là mà có trả về giá trị true hoặc false.
-<br>
-Ví dụ: hiển thị ẩn hoặc hiện hình ảnh<br>
-Ban đầu ta tạo một component tên demo_ngIF. Khi tạo xong thì nó sẽ có những file sau:<br>
-    <img src="https://i.imgur.com/QVLAdgj.png">
-<br>
-Trong file demo-ng-if.component.html ta viết:<br>
-    <img src="https://i.imgur.com/TD2QjG8.png">
-<br>
-File demo-ng-if.component.ts ta tạo thêm một biến isShowImg = true và một link ảnh bất kì. <br>
-    <img src="https://i.imgur.com/plW499Q.png">
-<br>
-Sau khi hoàn tất ta cho chạy chương trình thì kết quả sẽ hiện ra 1 form có hình ảnh và một button.<br>
-<img src="https://i.imgur.com/orucZW4.png">
-<br>
-Nhờ vào thẻ ngIf nên khi ta bấm vào button Show Image thì hình ảnh trong form sẽ ẩn hoặc hiện.<br>
-<br>
-    <img src="https://i.imgur.com/bwnRwTh.png">
-<br>
-Lưu ý: đừng quên dấu * phía trước ngIf 
+## 2.1. Angular Module
+- Một TypeScript/ES6 module là một cách để đóng gói, nhóm, tái sử dụng, phân phối và nạp code trong JavaScript.
+- Nói chung, một module sẽ chứa code, đóng gói một chức năng cụ thể. Module sẽ phân phối chức năng này tới phần còn lại của ứng dụng bằng cách định nghĩa một loạt exports, sau đó các phần khác của hệ thống có thể import.
+- Module core của Angular 2 là 'angular2/core' và nó cung cấp cho bạn khả năng truy cập tới các chức năng core như Component.
+- Angular Modules giúp tổ chúc application theo các tính năng chính của nó. Điều này giúp angular dễ mở rộng với những external libraries (ví dụ Material Design, Ionic.... cũng là các modules).
+- Một Angular Module thực chất là một class được đánh dấu bới decorator @NgModule. Tất cả các thành phần trong ứng dụng angular đều được đánh dấu bởi một decorator riêng.
+- Decorator sẽ nhận vào một meta data object để nói với Angular cách để compile và run module code này.
+- Metadata trong một module gồm:
+  + Định nghĩa các components, directives, pipes
+  + Export các class cho external module.
+  + Import các module cần thiết
+  + Provide các service ở tầng ứng dụng để bất kỳ component nào cũng có thể dùng được.
+- Module sẽ chứa những components, directives, services, pipes của riêng nó hay sẽ export để external module cũng có thể sử dụng được.
+- Nói tóm lại, mỗi module sẽ tập trung vào tính năng, business riêng hoặc là một module chứa các utils.
+- Ví dụ về NgModule. Đây là module đứng trên cùng của application.
+```import { NgModule }      from '@angular/core';
+   import { BrowserModule } from '@angular/platform-browser';
+   import { AppComponent }  from './app.component';
 
-
-<h3> 4.2 Tìm hiểu về ngFor </h3>
-
-Chúng ta dùng thẻ *ngFor để thực hiện việc duyệt các kiểu dữ liệu danh sách (như mảng)
-
-<ul>
-<li> NgFor cung cấp các biến cục bộ, có thể tạo một alias cho các biến đó như:</li>
-<li> index xác định chỉ số hiện tại của vòng lặp tương ứng.</li>
-<li> first xác định vòng lặp hiện tại có phải là vòng lặp đầu tiên không -> true : false.</li>
-<li> last xác định vòng lặp hiện tại có phải là vòng lặp cuối cùng không -> true : false.</li>
-<li> even xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số chẵn không -> true : false.</li>
-<li> odd xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số lẻ không -> true : false.</li>
-</ul>
-<br>
-Giá trị của ngFor là một câu lệnh có cú pháp như sau:<br>
-let <biến lặp> of <danh sách> <br>
-
-Biến lặp là do chúng ta tự đặt, bạn muốn đặt là gì cũng được, ngFor sẽ lặp qua danh sách và mỗi lần lặp thì chúng ta dùng biến lặp để lấy dữ liệu của phần tử hiện tại trong danh sách.
-
-Ví dụ: render list các students trong một class chẳng hạn.<br>
-Như ví dụ trên thì ta cũng tạo ra một component tên demo_ngFor. Trong đó sẽ có file:<br>
-    <img src="https://i.imgur.com/ZDBT42N.png">
-<br>
-File demo-ng-for.component.ts ta tạo ra một mảng giá trị lưu tất cả thông tin của students.<br>
-    <img src="https://i.imgur.com/ZXJAXb4.png">
-<br>
-File demo-ng-for.component.html ta tạo ra một đoạn html thể hiện danh sách students.Như trong hình ta thấy ở thẻ div có cú pháp <h4> <div *ngFor ="let list of arrStudent ;let i=index"> </h4>. Chúng ta dùng thuộc tính *ngFor="let list of arrStudent ;let i=index " để duyệt danh sách students trong mảng arrStudent . trong đó ta khởi tạo biến i=index để xác định chỉ số hiện tại.
-    <img src="https://i.imgur.com/GaqV3xK.png">
-
-Sau khi hoàn thành những bước trên,chạy chương trình vừa viết thì ta được một list danh sách students trong mảng arrStudent ra màn hình.<br>
-   <img src="https://i.imgur.com/8ilTogT.png">
-<br>
-Lưu ý: đừng quên dấu * phía trước ngFor
-
-<h3> 4.3 Tìm hiểu về ngModel </h3>
-
-ngModel là một Directive dùng để liên kết dữ liệu với client, nghĩa là nó thường được dùng để cho người dùng nhập liệu nên ta hay sử dụng trong form html.
-
-Một yêu cầu cần có của thẻ ngModel là bạn phải import lớp FormsModule vào file app.module.ts thì mới có thể sử dụng:
-     <img src="https://i.imgur.com/mH1gMzr.png">
-
-File user-form.component.ts ta tạo ra biến name.
-Sau đó chúng ta có thể sử dụng ngModel cho từng input như sau trong file user-form.component.html :<br>
-   <img src="https://i.imgur.com/3HTTgK7.png">
-<br>
-Chúng ta sẽ thêm 2 thuộc tính có tên là [(ngModel)] và name. Đây là cách sử dụng của directive ngModel , với dấu [ biểu thị cho việc Input, và dấu ( biểu thị cho việc Ouput, tức là directive ngModel khi được dùng cho element input thì có thể nhận dữ liệu - vì có khai báo [], và có thể xuất dữ liệu - vì có khai báo (), có nghĩa là bằng việc set giá trị ở thuộc tính [(ngModel)], ở đây là username, chúng ta có thể thông qua biến name ở trong file user-form.component.ts để set/get giá trị cho input name của form.<br>
-Hoàn tất các bước trên, chạy chương trình ta được kết quả sau:<br>
-  <img src="https://i.imgur.com/TCLil2k.png">
-
-<h2> 1.Model và View: Two ways binding. </h2>
-
-Two-way binding chính là cách thức tự động đồng bộ dữ liệu giữa Model và View tra ngoài View cho người dùng thấy được (chẳng hạn như là 1 ô textbox). Khi có bất kì thày đổi trên View này, chẳng hạn như trong ô textbox mình sẽ nhập là abc. Thì tự động dữ liệu abc này sẽ ngay lập tự được đồng bộ vào bên trong Model. Và tiếp theo bên trong Model nếu có bất kỳ sự thay đổi nào sẽ ngay lập tức được đồng bộ ngược lại ra View. Vì thế dữ liệu được trung chuyển từ Model sang View hay từ View sang Model là một thể thống nhất.
-Chúng ta vẫn có thể áp dụng Two-way Binding bằng cách sử dụng directive ngModel trong Angular 2.Thẻ ngModel trong cặp dấu [()], nó sẽ thực hiện đồng bộ dữ liệu từ Component vs DOM và ngược lại. <br>
- Ví dụ :
-      <h4> <input placeholder="Enter username" [(ngModel)]="name" > </h4> <br>
-Để sử dụng Two ways binding trong angular thì chúng ta phải import thêm thư viện tại file app.module.ts <br>
-    <img src="https://i.imgur.com/mH1gMzr.png">
-
-
-
-
-
+   @NgModule({
+     imports:      [ BrowserModule ],
+     declarations: [ AppComponent ],
+     bootstrap:    [ AppComponent ]
+   })
+   export class AppModule { }
+```
+  + Nhìn vào Module trên, các bạn có thể thấy nó được đánh dấu với decorator @NgModule. Một module BrowserModule, một module chứa các utils mà mọi browser app phải dùng.
+  + BrowserModule đăng ký những service quan trọng, đồng thời cũng bao gồm các directives rất quen thuộc như NgIf, NgFor (tương ứng với ng-if và ng-repeat trong Ng1).
+  + Thuộc tính declarations để định nghĩa component trong Module. Ở đây chỉ có một mình AppComponent, được coi là root component của app.
+  + Bạn có thể tưởng tượng Module này như là một module cha cho những module sau này.
+  ![app module](https://user-images.githubusercontent.com/35052781/35087864-3b7053b6-fc64-11e7-8def-0bfd78e82b49.png)
+  + Còn AppComponent như là một base component để những component từ những Module khác dựa vào.
+  ![ba4d06e1-d6ee-4a7c-8d20-e7829a09d882](https://user-images.githubusercontent.com/35052781/35087941-7711f8b6-fc64-11e7-90ea-3c271b1301c7.png)
+- Giả sử có một ứng dụng quản lý sinh viên, giáo viên của một trường học với các tính năng chính là :
+  + Đăng nhập, đăng ký, ..
+  + Quản lý thông tin sinh viên, giáo viên
+  + Cung cấp tính năng đăng ký học online.
+  Nhìn vào các tính năng chính trên thì chúng ta có thể tách ứng dụng thành các module như sau: AuthenticationModule, StudentManagementModule, TeacherManagementModule, RegisterOnlineModule.
