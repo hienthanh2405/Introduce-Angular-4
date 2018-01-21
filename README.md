@@ -229,3 +229,134 @@
 ```
   + Sử dụng pipe ở trong Component như sau:
 ```Temperature {{ temp | tempConverter:true:'F' }}```
+
+## 2.4. Tổng quan về Directives
+- Directives là một thành phần mở rộng HTML, hay nói cách khác là các thuộc tính (properties) của các thẻ HTML mà Angular nó định nghĩa thêm, vì nó là riêng của Angular nên phải tuân thủ theo nguyên tắc của nó là chữ bắt đầu luôn luôn là ký tự "ng-prefix", trong đó tiền tố prefix là tên của derective mà chúng ta sử dụng. 
+  Như ở các ví dụ trước, để khai báo là một Directive Controller thì chúng ta khai báo "ng-controller"
+- Có 3 loại directive trong Angular:
+  + Components(Một Component là một directive với một template. Đây là directive phổ biến nhất trong ba directive và chúng ta thường dùng chúng nhiều khi xây dựng ứng dụng.)
+  + Structure directives(Structural directive có thể thay đổi cấu trúc DOM bằng cách thêm hay bớt phần tử DOM. NgFor và NgIf là hai ví dụ quen thuộc.)
+  + Attribute directives(Một Attribute directive có thể thay đổi giao diện hay hành vi của một phần tử. NgStyle là một ví dụ, có thể thay đổi nhiều style cho phần tử cùng lúc.)
+- Các directive thường dùng:
+### NgIf
+- Sử dụng khi muốn thêm hoặc xóa bỏ một phần tử khi render. Ví dụ: hiển thị thông báo lỗi khi người dùng nhập form chưa đúng.
+- Cú pháp: ```<h2 *ngIf="printable">{{ message }}</h2>```
+- Lưu ý: đừng quên dấu * phía trước ngIf directive
+
+### NgFor
+- Sử dụng khi muốn render một list các phần tử. Ví dụ: render list các bài học trong một series chẳng hạn.
+- Cú pháp:
+```<div *ngFor="let contact of contacts">
+     <h3>{{ contact.name }}</h3>
+     <div>
+       <img *ngIf="contact.avatar?.url" [src]="contact.avatar?.url" alt="Avatar of {{ contact.name }}">
+     </div>
+   </div>
+```
+- Lưu ý: đừng quên dấu * phía trước ngFor directive và sử dụng cấu trúc "let tenbien of tenmang"
+
+### NgSwitchCase
+- Sử dụng thay thế việc if nhiều lần, tương tự như switch-case trong Javascript.
+- Cú pháp: 
+```<div [ngSwitch]="conditionExpression">
+     <template [ngSwitchCase]="case1Exp">...</template>
+     <template ngSwitchCase="case2LiteralString">...</template>
+     <template ngSwitchDefault>...</template>
+   </div>
+```
+Hoặc:
+```<div [ngSwitch]="tabIndex">
+     <div *ngSwitchCase="1">
+       <div>
+         Tab content 1
+       </div>
+       <p>
+         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, rerum.
+       </p>
+     </div>
+     <div *ngSwitchCase="2">
+       <div>
+         Tab content 2
+       </div>
+       <p>
+         Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse.
+       </p>
+     </div>
+     <div *ngSwitchCase="3">
+       <div>
+         Tab content 3
+       </div>
+       <p>
+         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus a sequi cupiditate accusantium vitae impedit eum illo voluptatem neque, nisi.
+       </p>
+     </div>
+   </div>
+```
+- Lưu ý: Không có dấu *ở phía trước ngSwitch directive. Thay vào đó, sử dụng property binding.
+         Đặt dấu * ở phía trước ngSwitchCasevà ngSwitchDefault. Trường hợp sử dụng với thẻ template như ở ví dụ đầu tiên của ngSwitch thì không.
+
+### ngStyle
+- Dùng để thay đổi nhiều style của phần từ.
+- Cú pháp:
+```<some-element [ngStyle]="{'font-style': styleExp}">...</some-element>
+   <some-element [ngStyle]="{'max-width.px': widthExp}">...</some-element>
+   <some-element [ngStyle]="objExp">...</some-element>
+```
+- Ví dụ:
+```<div [ngStyle]="{
+       // CSS property names
+       'font-style': canSave ? 'italic' : 'normal',        // italic
+       'font-weight': !isUnchanged ? 'bold' : 'normal',    // normal
+       'font-size.px': isSpecial ? 24 : 8,                 // with unit
+     }">
+     This div is cool.
+   </div>
+```
+Hoặc:
+```<div [ngStyle]="objStyle">
+     This div is cool.
+   </div>
+   objStyle = {
+     // CSS property names
+     'font-style': this.canSave ? 'italic' : 'normal',        // italic
+     'font-weight': !this.isUnchanged ? 'bold' : 'normal',    // normal
+     'font-size.px': this.isSpecial ? 24 : 8,                 // with unit
+   };
+```
+
+### ngClass
+- Cú pháp:
+```<some-element ngClass="first second">...</some-element>     // bind string
+   <some-element [ngClass]="'first second'">...</some-element> // bind string value
+   <some-element [ngClass]="['first', 'second']">...</some-element> // bind array
+   <some-element [ngClass]="{    // bind object
+       'first': true,
+       'second': true,
+       'third': false
+       }">
+       ...
+   </some-element>
+   <some-element [ngClass]="stringExp|arrayExp|objExp">    // variable
+       ...
+   </some-element>
+```
+  + string: là một list các CSS class, cách nhau bởi dấu cách.
+  + array: là array string CSS class.
+  + object: key -> value, nếu value = true thì add, ngược lại thì remove.
+- Ví dụ: 
+```<button class="btn" [ngClass]="'active btn-primary'">
+       String binding
+   </button>
+   // or
+   <button class="btn" ngClass="active btn-primary">
+      String binding
+   </button>
+   // or
+   <button class="btn" [ngClass]="['active', 'btn-primary']">
+       Array binding
+   </button>
+   // or
+   <button class="btn" [ngClass]="{active: tabIndex == 1}">
+      Object binding
+   </button>
+```
