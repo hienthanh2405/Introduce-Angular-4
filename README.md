@@ -23,7 +23,8 @@ Ví dụ :
 - Module sẽ chứa những components, directives, services, pipes của riêng nó hay sẽ export để external module cũng có thể sử dụng được.
 - Nói tóm lại, mỗi module sẽ tập trung vào tính năng, business riêng hoặc là một module chứa các utils.
 - Ví dụ về NgModule. Đây là module đứng trên cùng của application.
-```import { NgModule }      from '@angular/core';
+```
+   import { NgModule }      from '@angular/core';
    import { BrowserModule } from '@angular/platform-browser';
    import { AppComponent }  from './app.component';
 
@@ -52,7 +53,8 @@ Ví dụ :
 - Component là các khối xây dựng lên ứng dụng Angular 2. Nó biểu diễn một phần có thể tái sử dụng của UI, thường là một một phần tử custom html.
 - Một component thành lập bởi ít nhất một phần code html cái được biết là template, một class đóng gói dữ liệu và các tương tác với template, và selector (tên phần tử custom html).
 - Ví dụ  Component App:
-```import { Component } from '@angular/core';
+```
+   import { Component } from '@angular/core';
 
    @Component({
      selector: 'my-app',
@@ -69,7 +71,8 @@ Ví dụ :
 - Cách đặt tên component:" tên.component.ts"
 - Các bước tạo 1 Component:
   + Bước 1: Trong src/app/People mình tạo file ra people.component.ts
-```import { Component } from '@angular/core';
+```
+   import { Component } from '@angular/core';
 
    @Component({
      selector: 'app-people',
@@ -81,7 +84,8 @@ Ví dụ :
    }
 ```
   + Bước 2: Tiếp theo mình gọi Components mình mới tạo ra trong file app.module.ts để nó chạy được trong thư mục src/app/app.module.ts
-```import { BrowserModule } from '@angular/platform-browser';
+```
+   import { BrowserModule } from '@angular/platform-browser';
    import { NgModule } from '@angular/core';
 
    import { AppComponent } from './app.component';
@@ -101,23 +105,31 @@ Ví dụ :
    export class AppModule { }
 ```
   + Bước 3:Mình cần import PeopleComponent vào trong app.module.ts để nó có thể chạy được
- ``` import { PeopleComponent } from './People/people.component';```
+ ``` 
+    import { PeopleComponent } from './People/people.component';
+ ```
   + Bước 4: Bây giờ mình vào srec/app/app.component.html mình gọi ra là xong:
-```<app-people></app-people>```
+```
+   <app-people></app-people>
+```
 
   selecetor <app-people> nằm trong file  trong file people.component.ts
-```@Component({
+```
+   @Component({
      selector: 'app-people',
      templateUrl: './people.component.html'
    })
 ```
   Đó chính là selector của nó. Bây giờ trong component ( people.component.ts ), bạn muốn hiển thị điều gì ra màn hình thì ghi vô titlePeople:
-```export class PeopleComponent {
+```
+   export class PeopleComponent {
    titlePeople = "Demo Component"
 }
 ```
    Đó chính là biến mình sẽ gọi ra trong file pepople.component.html
-```<h2>{{ titlePeople }}</h2>```
+```
+   <h2>{{ titlePeople }}</h2>
+```
   Và khi run lên thì nó sẽ hiển thị trên trình duyệt là Demo Component
 - Note: Ngoài ra, ta còn cách tạo nhanh 1 component bằng CLI: "ng g c tencomponent", nó sẽ tự động làm 4 bước trên giúp ta, ta chỉ cần vô các file đã được tạo ra và chỉnh sửa là ok.   
 
@@ -132,16 +144,20 @@ Ví dụ :
 
 ### Pipe sử dụng như thế nào?
 - Nếu bạn sử dụng Date và Currency pipes thì bạn cần phải có thêm polyfill để support trên các trình duyệt cũ, bằng việc thêm đoạn script sau vào file index.html
-```<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>```
+```
+   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
+```
 - Hoặc nếu bạn sử dụng Angular CLI thì chạy lệnh cài đặt npm install --save intl và uncomment dòng sau trong file polyfill.ts
-```import 'core-js/es6/reflect';
+```
+   import 'core-js/es6/reflect';
    import 'core-js/es7/reflect';
    import 'zone.js/dist/zone';
 ```
 - Chúng ta có thể sử dụng một pipe duy nhất, có thể bao gồm cả tham số, hoặc có thể sử dụng pipe theo tuần tự – với kết quả của pipe này là đầu vào của pipe tiếp theo.
 - Ví dụ:
   + Sử dụng Pipe lowercase và uppercase: (sử dụng không có tham số)
-```@Component({
+```
+   @Component({
      selector: 'lowerupper-pipe',
      template: `<div>
        <label>Name: </label><input #name (keyup)="change(name.value)" type="text">
@@ -157,7 +173,8 @@ Ví dụ :
    }
 ```
   + Sử dụng có tham số như Pipe date:
-```@Component({
+```
+   @Component({
      selector: 'date-pipe',
      template: `<div>
        <p>Today is {{today | date}}</p>
@@ -170,7 +187,8 @@ Ví dụ :
    } 
 ```
   + Sử dụng nhiều tham số như Pipe slice:
-```@Component({
+```
+   @Component({
      selector: 'slice-list-pipe',
      template: `<ul>
        <li *ngFor="let i of collection | slice:1:3">{{ i }}</li>
@@ -181,7 +199,8 @@ Ví dụ :
    } 
 ```
   +Sử dụng nhiều Pipe tuần tự – Chaining Pipe:
-```@Component({
+```
+   @Component({
      selector: 'date-pipe',
      template: `<div>
        <p>Today is {{today | date | lowercase}}</p>
@@ -200,7 +219,8 @@ Ví dụ :
 ### Cách tạo một Custom Pipe trong Angular như thế nào?
 - Đầu tiên, chúng ta tạo một class và decorate nó với decorator @Pipe, decorator này cần tối thiểu một object có property name, chính là tên của pipe.
 - Ví dụ, chúng ta có thể tạo một pipe để convert nhiệt độ giữa độ C và độ F với tên tempConverter như sau:
-```import { Pipe } from '@angular/core';
+```
+  import { Pipe } from '@angular/core';
 
   @Pipe({
      name: 'tempConverter'
@@ -210,7 +230,8 @@ Ví dụ :
 ```
  + Mặc định khi tạo là pure pipe.
  + Tiếp theo, chúng ta cần implement một interface là PipeTransform, và implement hàm transform của interface đó:
-```import { Pipe, PipeTransform } from '@angular/core';
+```
+   import { Pipe, PipeTransform } from '@angular/core';
 
    @Pipe({
     name: 'tempConverter'
@@ -222,7 +243,8 @@ Ví dụ :
 ``` 
   + Trong hàm transform, chúng ta sẽ thực hiện các công việc để biến đổi đầu vào ra kết quả mong muốn ở đầu ra.
   + Sau khi hoàn thành implement class Pipe ở trên, chúng ta cần khai báo vào NgModule mà nó thuộc về để có thể sử dụng nó trong toàn module đó:
-```import { TempConverterPipe } from './pipes/temp-converter.pipe';
+```
+   import { TempConverterPipe } from './pipes/temp-converter.pipe';
 
    @NgModule({
      declarations: [
@@ -236,7 +258,9 @@ Ví dụ :
    export class AppModule { }
 ```
   + Sử dụng pipe ở trong Component như sau:
-```Temperature {{ temp | tempConverter:true:'F' }}```
+```
+   Temperature {{ temp | tempConverter:true:'F' }}
+```
 
 ## 2.4. Tổng quan về Directives
 - Directives là một thành phần mở rộng HTML, hay nói cách khác là các thuộc tính (properties) của các thẻ HTML mà Angular nó định nghĩa thêm, vì nó là riêng của Angular nên phải tuân thủ theo nguyên tắc của nó là chữ bắt đầu luôn luôn là ký tự "ng-prefix", trong đó tiền tố prefix là tên của derective mà chúng ta sử dụng. 
@@ -254,7 +278,8 @@ Ví dụ :
 ### NgFor
 - Sử dụng khi muốn render một list các phần tử. Ví dụ: render list các bài học trong một series chẳng hạn.
 - Cú pháp:
-```<div *ngFor="let contact of contacts">
+```
+   <div *ngFor="let contact of contacts">
      <h3>{{ contact.name }}</h3>
      <div>
        <img *ngIf="contact.avatar?.url" [src]="contact.avatar?.url" alt="Avatar of {{ contact.name }}">
@@ -266,14 +291,16 @@ Ví dụ :
 ### NgSwitchCase
 - Sử dụng thay thế việc if nhiều lần, tương tự như switch-case trong Javascript.
 - Cú pháp: 
-```<div [ngSwitch]="conditionExpression">
+```
+   <div [ngSwitch]="conditionExpression">
      <template [ngSwitchCase]="case1Exp">...</template>
      <template ngSwitchCase="case2LiteralString">...</template>
      <template ngSwitchDefault>...</template>
    </div>
 ```
 Hoặc:
-```<div [ngSwitch]="tabIndex">
+```
+   <div [ngSwitch]="tabIndex">
      <div *ngSwitchCase="1">
        <div>
          Tab content 1
@@ -306,12 +333,14 @@ Hoặc:
 ### ngStyle
 - Dùng để thay đổi nhiều style của phần từ.
 - Cú pháp:
-```<some-element [ngStyle]="{'font-style': styleExp}">...</some-element>
+```
+   <some-element [ngStyle]="{'font-style': styleExp}">...</some-element>
    <some-element [ngStyle]="{'max-width.px': widthExp}">...</some-element>
    <some-element [ngStyle]="objExp">...</some-element>
 ```
 - Ví dụ:
-```<div [ngStyle]="{
+```
+   <div [ngStyle]="{
        // CSS property names
        'font-style': canSave ? 'italic' : 'normal',        // italic
        'font-weight': !isUnchanged ? 'bold' : 'normal',    // normal
@@ -321,7 +350,8 @@ Hoặc:
    </div>
 ```
 Hoặc:
-```<div [ngStyle]="objStyle">
+```
+   <div [ngStyle]="objStyle">
      This div is cool.
    </div>
    objStyle = {
@@ -334,7 +364,8 @@ Hoặc:
 
 ### ngClass
 - Cú pháp:
-```<some-element ngClass="first second">...</some-element>     // bind string
+```
+   <some-element ngClass="first second">...</some-element>     // bind string
    <some-element [ngClass]="'first second'">...</some-element> // bind string value
    <some-element [ngClass]="['first', 'second']">...</some-element> // bind array
    <some-element [ngClass]="{    // bind object
@@ -352,7 +383,8 @@ Hoặc:
   + array: là array string CSS class.
   + object: key -> value, nếu value = true thì add, ngược lại thì remove.
 - Ví dụ: 
-```<button class="btn" [ngClass]="'active btn-primary'">
+```
+   <button class="btn" [ngClass]="'active btn-primary'">
        String binding
    </button>
    // or
