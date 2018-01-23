@@ -5,6 +5,7 @@ Ví dụ :
          <h4> <input placeholder="Enter username" [(ngModel)]="name" > </h4>
 <p>Để sử dụng Two ways binding trong angular thì chúng ta phải import thêm thư viện tại file app.module.ts</p>
 </br><img src="https://i.imgur.com/mH1gMzr.png">
+
 # 2. Tìm hiểu về Module, Component, Injectable, Pipe, Directive.
 
 ## 2.1. Angular Module
