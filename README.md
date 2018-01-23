@@ -3,9 +3,8 @@ Two-way binding chính là cách thức tự động đồng bộ dữ liệu gi
 Chúng ta vẫn có thể áp dụng Two-way Binding bằng cách sử dụng directive ngModel trong Angular 2.Thẻ ngModel trong cặp dấu [()], nó sẽ thực hiện đồng bộ dữ liệu từ Component vs DOM và ngược lại.
 Ví dụ :
          <h4> <input placeholder="Enter username" [(ngModel)]="name" > </h4>
-Để sử dụng Two ways binding trong angular thì chúng ta phải import thêm thư viện tại file app.module.ts
-
-         <br><img src="https://i.imgur.com/mH1gMzr.png">
+<p>Để sử dụng Two ways binding trong angular thì chúng ta phải import thêm thư viện tại file app.module.ts</p>
+</br><img src="https://i.imgur.com/mH1gMzr.png">
 # 2. Tìm hiểu về Module, Component, Injectable, Pipe, Directive.
 
 ## 2.1. Angular Module
@@ -412,15 +411,14 @@ là tính bao đóng (encapsulation), tính kế thừa(inheritance), tính đa 
 Sử dụng chúng thông qua từ khóa extends và cho phép các class và interface thừa kế các resource.</p>
 <h3>3.2	Tính trừu tượng (Abstraction)</h3>
 <p>Lớp trừu tượng là lớp mà từ đó các lớp khác có thể kế thừa được. Lớp trừu tượng có thể chứa các thuộc tính cũng như các hàm thực thi(các phương thức abstract thì chỉ khai báo chứ không thực thi). </p>
-</br>![Imgur](https://i.imgur.com/zuHYypU.png)
-</br>![Imgur](https://i.imgur.com/At0J9iD.png)
-
+<img src="https://i.imgur.com/zuHYypU.png">
+<img src="https://i.imgur.com/At0J9iD.png">
 <i>Tính trừu tượng cho phép tạo ra các thông tin không được hiển thị rõ ràng và tính đóng gói cho phép một người lập trình thể hiện tính trừu tượng ở mức độ mong muốn.</i>
 <h3>3.3	Tính đa hình (Polymorphism)</h3>
 <p>Tính đa hình trong lập trình hướng đối tượng là sự thay đổi hành vi của phương thức ở mỗi đối tượng khác nhau thể hiện thông qua việc gửi các thông điệp (việc gọi các hàm bên trong của một đối tượng.).</p>
 <p>Ví dụ: khi định nghĩa hai đối tượng “Square” và “Cicle” thì có một phương thức chung là “Perimeter”. Khi gọi phương thức này thì nếu đối tượng là “Square” nó sẽ tính theo công thức khác với khi đối tượng là “Cicle”.</p>
-</br>![Imgur](https://i.imgur.com/X7NypmN.png)
-</br>![Imgur](https://i.imgur.com/lUIioq2.png)
+<img src="https://i.imgur.com/X7NypmN.png">
+<img src="https://i.imgur.com/lUIioq2.png">
 <p>Đa hình: Thể hiện rõ nhất trong override và overload của superclass và subclass.</p>
 <p>Override: là hai phương thức cùng tên, cùng tham số, cùng kiểu trả về nhưng thằng con viết lại và dùng theo cách của nó, và xuất hiện ở lớp cha và tiếp tục xuất hiện ở lớp con. Khi dùng nó sẽ ưu tiên gọi thằng cha.. sau đó thằng cha mà không có thì sẽ gọi thằng con.</p>
 <p>Overload: hai phương thức cùng tên nhưng phải khác tham số hoặc kiểu trả về (áp trong cùng một class).</p>
@@ -429,9 +427,7 @@ Sử dụng chúng thông qua từ khóa extends và cho phép các class và in
 <p>Tính chất này không cho phép người dùng hay đối tượng thay đổi dự liệu thành viên của đối tượng nội nhằm đảm bảo sự toàn vẹn của đối tượng. 
 Không cho phép bên ngoài biết được bên trong đối tượng có những gì hay logic xử lí như thế nào, 
 nếu muốn thay đổi bên trong đối tượng thi phải được sự chấp nhận của đối tượng đó thông qua các mức độ truy cập(access modifier) private, default (hay là pravite package) , protected, public.</p>
-</br>![Imgur](https://i.imgur.com/r7Undr9.png)
-
-
+<img src="https://i.imgur.com/r7Undr9.png">
 <br>
 <h2> 4. Các directive cơ bản trong Angular: ngFor, ngIf, ngModel </h2><br>
 Angular directive được sử dụng để kế thừa HTML. Có những thuộc tính đặc biệt bắt đầu với tiền tố ng-. Chúng ta sẽ thảo luận những directive:<br>
